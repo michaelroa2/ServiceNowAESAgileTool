@@ -1,0 +1,22 @@
+(function execute(inputs, outputs) {
+// ... code ...
+  var grStories = new GlideRecord('x_668382_michael_0_epics');
+ grStories.addQuery('number', inputs.number);
+ grStories.query();
+var returnString = "Epic Number: ";
+while(grStories.next()){
+  returnString = returnString + grStories.getValue('number');
+  returnString = returnString + "\n Current Completion Percent: ";
+  returnString = returnString + grStories.getValue('percent_complete_by_count');
+  
+}
+//you have the resultant calculation
+var grStrories = new GlideRecord('x_668382_michael_0_generate_stats');
+grStrories.addQuery('sys_id',inputs.stats_sys_id);
+grStrories.query();
+if(grStrories.next()){
+  grStrories.stats_string = returnString;
+  grStrories.update();
+}
+  
+})(inputs, outputs);
